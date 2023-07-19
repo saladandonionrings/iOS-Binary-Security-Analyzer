@@ -15,7 +15,7 @@ printf "%-15s | %s\n" "-------------" "-------------------------------"
 for function in "${functions[@]}"; do
     output=$(otool -I -v $binary | grep -w $function)
     if [ -z "$output" ]; then
-        printf "%-15s | %s\n" "$function" "Nothing found"
+        printf "%-15s | %s\n" "$function" "Not found"
     else
         IFS=$'\n'
         for line in $output; do
