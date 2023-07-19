@@ -2,6 +2,12 @@
 
 This script inspects iOS binaries to uncover usage of **insecure functions**, **implementation of weak cryptography**, **encryption status**, and the presence of **security features** like *Position Independent Executable* (PIE), *Stack Canaries*, and *Automatic Reference Counting* (ARC). 
 
+## 🌟 Features
+* Quick static analysis of iOS binaries
+* Identification of commonly misused and insecure functions
+* Detection of weak cryptographic methods
+* Checks for various iOS binary security features
+
 ## 📋 Requirements
 
 1. 📲 **Jailbreak your iOS device.**
