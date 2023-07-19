@@ -20,7 +20,7 @@ The binary should be located within the `/private/var/containers/Bundle/Applicat
 git clone https://github.com/saladandonionrings/ios-binary-checks.git
 cd ios-binary-checks
 # send the script to your ios device
-scp check-binary.sh rootàip:/var/root
+scp check-binary.sh root@ip:/var/root
 
 # on ios device
 ./check-binary.sh <binary>
