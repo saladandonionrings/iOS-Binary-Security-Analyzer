@@ -20,3 +20,7 @@ The binary should be located within the `/private/var/containers/Bundle/Applicat
 ```bash
 ./check-binary.sh <binary>
 ```
+
+### 📸 Screenshot
+![image](https://github.com/saladandonionrings/ios-binary-checks/assets/61053314/6b0ef46b-156c-4624-8042-7b9d59885db8)
+
