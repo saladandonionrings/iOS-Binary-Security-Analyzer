@@ -15,9 +15,14 @@ This script checks an iOS binary for the **presence of certain potentially insec
 
 The binary should be located within the `/private/var/containers/Bundle/Application/XXXXXXX/<APP-PATH>/` directory.
 
-**Run the script :**
-
 ```bash
+# on host
+git clone https://github.com/saladandonionrings/ios-binary-checks.git
+cd ios-binary-checks
+# send the script to your ios device
+scp check-binary.sh rootàip:/var/root
+
+# on ios device
 ./check-binary.sh <binary>
 ```
 
