@@ -1,6 +1,6 @@
-# 🕵️‍♂️ iOS Binary Insecure Functions Checker
+# 🕵️‍♂️ iOS Binary Security Analyzer
 
-This script checks an iOS binary for the **presence of certain potentially insecure function calls**. The script is intended to be run on a jailbroken iOS device and requires the `otool` command to function.
+This script checks an iOS binary for the **presence of certain potentially insecure function calls**. 
 
 ## 📋 Requirements
 
