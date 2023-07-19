@@ -1,21 +1,61 @@
 #!/bin/bash
 
-if [ $# -eq 0 ] || [ "$1" = "-h" ]; then
-    echo "No binary provided. Usage: ./check-binary.sh <binary>"
+check_feature() {
+    local title=$1
+    local commands=$2
+
+    echo "[*] $title"
+    printf "%-15s | %s\n" "Function" "Value"
+    printf "%-15s | %s\n" "-----------" "----------------------------------"
+
+    for cmd in "${commands[@]}"; do
+        local function_name="${cmd##* }"
+        function_name="${function_name//\'/}" # remove quotes
+        output=$(eval $cmd)
+        if [ -z "$output" ]; then
+            printf "%-15s | %s\n" "$function_name" "N/F"
+        else
+            IFS=$'\n'
+            for line in $output; do
+                printf "%-15s | %s\n" "$function_name" "$line"
+                function_name=""
+            done
+            unset IFS
+        fi
+        printf "%-15s | %s\n" "-----------" "----------------------------------"
+    done
+    echo ""
+}
+
+if [ $# -eq 0 ]; then
+    echo "No binary provided. Usage: ./check.sh <binary>"
     exit 1
 fi
 
 binary=$1
-functions=("_random" "_srand" "_rand" "_gets" "_memcpy" "_strncpy" "_strlen" "_vsnprintf" "_sscanf" "_strtok" "_alloca" "_sprintf" "_printf" "_vsprintf" "_malloc")
-echo "[*] Checking usage of unsafe and insecure functions in binary"
+
+echo "[+] iOS Binary Security Analyzer"
+echo "*N/F = Not Found"
 echo ""
-printf "%-15s | %s\n" "Functions" "Value Identified"
-printf "%-15s | %s\n" "-------------" "-------------------------------"
+
+# Perform the checks
+check_feature "PIE (Position Idependant Executable)" "otool -hv $binary | grep PIE"
+check_feature "Stack Canaries" "otool -I -v $binary | grep stack_chk"
+check_feature "ARC (Automatic Reference Counting)" "otool -I -v $binary | grep _objc_"
+check_feature "Encrypted Binary (cryptid 1)" "otool -arch all -Vl $binary | grep -A5 LC_ENCRYPT"
+check_feature "Weak Cryptography (MD5)" "otool -I -v $binary | grep -w '_CC_MD5'" 
+check_feature "Weak Cryptography (SHA1)" "otool -I -v $binary | grep -w '_CC_SHA1'"
+
+# The previous checks
+functions=("_random" "_srand" "_rand" "_gets" "_memcpy" "_strncpy" "_strlen" "_vsnprintf" "_sscanf" "_strtok" "_alloca" "_sprintf" "_printf" "_vsprintf" "_malloc")
+echo "[*] Unsafe and insecure functions"
+printf "%-15s | %s\n" "Function" "Value"
+printf "%-15s | %s\n" "-----------" "----------------------------------"
 
 for function in "${functions[@]}"; do
     output=$(otool -I -v $binary | grep -w $function)
     if [ -z "$output" ]; then
-        printf "%-15s | %s\n" "$function" "Not found"
+        printf "%-15s | %s\n" "$function" "N/F"
     else
         IFS=$'\n'
         for line in $output; do
@@ -24,5 +64,5 @@ for function in "${functions[@]}"; do
         done
         unset IFS
     fi
-    printf "%-15s | %s\n" "-------------" "-------------------------------"
+    printf "%-15s | %s\n" "-----------" "----------------------------------"
 done
