@@ -1,6 +1,6 @@
 # 🕵️‍♂️ iOS Binary Security Analyzer
 
-This script checks an iOS binary for the **presence of certain potentially insecure function calls**. 
+This script inspects iOS binaries to uncover usage of **insecure functions**, **implementation of weak cryptography**, **encryption status**, and the presence of **security features** like *Position Independent Executable* (PIE), *Stack Canaries*, and *Automatic Reference Counting* (ARC). 
 
 ## 📋 Requirements
 
@@ -27,5 +27,6 @@ scp check-binary.sh root@ip:/var/root
 ```
 
 ### 📸 Screenshot
-![image](https://github.com/saladandonionrings/ios-binary-checks/assets/61053314/6b0ef46b-156c-4624-8042-7b9d59885db8)
+![image](https://github.com/saladandonionrings/iOS-Binary-Security-Analyzer/assets/61053314/1f2ec322-c0da-4326-9f18-c1ad7585f6e7)
+
 
