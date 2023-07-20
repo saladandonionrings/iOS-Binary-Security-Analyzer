@@ -37,6 +37,13 @@ binary=$1
 echo "[+] iOS Binary Security Analyzer"
 echo "*N/F = Not Found"
 echo ""
+
+architecture=$(lipo -info "$binary")
+architecture="${architecture##*: }" 
+echo "[*] Architecture :"
+echo "$architecture"
+echo ""
+
 echo "------------------------------------------"
 echo "---------------- SECURITY ----------------"
 echo "------------------------------------------"
@@ -46,7 +53,7 @@ crypt_info=$(otool -arch all -Vl "$binary" | grep -A5 LC_ENCRYPT | grep -w crypt
 if [[ $crypt_info = *"1"* ]]; then
     echo "[+] Binary is encrypted :"
 else
-    echo "[-] Binary is not encrypted."
+    echo "[-] Binary is not encrypted :"
 fi
 echo $crypt_info
 echo ""
