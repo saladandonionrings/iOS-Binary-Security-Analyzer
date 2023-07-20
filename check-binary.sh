@@ -18,7 +18,7 @@ check_feature() {
             IFS=$'\n'
             for line in $output; do
                 printf "%-15s | %s\n" "$function_name" "$line"
-                function_name=""
+                function_name="" 
             done
             unset IFS
         fi
@@ -38,7 +38,7 @@ echo "[+] iOS Binary Security Analyzer"
 echo "*N/F = Not Found"
 echo ""
 echo "------------------------------------------"
-echo "------------- GOOD PRACTICES -------------"
+echo "---------------- SECURITY ----------------"
 echo "------------------------------------------"
 echo ""
 # Check if the binary is encrypted
@@ -51,18 +51,20 @@ fi
 echo $crypt_info
 echo ""
 
+# Perform the checks
 check_feature "PIE (Position Idependant Executable)" "otool -hv $binary | grep PIE"
 check_feature "Stack Canaries" "otool -I -v $binary | grep stack_chk"
 check_feature "ARC (Automatic Reference Counting)" "otool -I -v $binary | grep _objc_"
 
 echo "-----------------------------------------"
-echo "------------- BAD PRACTICES -------------"
+echo "---------------- INSECURE ---------------"
 echo "-----------------------------------------"
 echo ""
 
 check_feature "Weak Cryptography (MD5)" "otool -I -v $binary | grep -w '_CC_MD5'"
 check_feature "Weak Cryptography (SHA1)" "otool -I -v $binary | grep -w '_CC_SHA1'"
 
+# The previous checks
 functions=("_random" "_srand" "_rand" "_gets" "_memcpy" "_strncpy" "_strlen" "_vsnprintf" "_sscanf" "_strtok" "_alloca" "_sprintf" "_printf" "_vsprintf" "_malloc")
 echo "[*] Unsafe and insecure functions"
 printf "%-15s | %s\n" "Function" "Value"
@@ -76,7 +78,7 @@ for function in "${functions[@]}"; do
         IFS=$'\n'
         for line in $output; do
             printf "%-15s | %s\n" "$function" "$line"
-            function=""
+            function="" 
         done
         unset IFS
     fi
