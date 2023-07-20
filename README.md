@@ -4,9 +4,9 @@ This script inspects iOS application binaries to uncover usage of **insecure fun
 
 ## 🌟 Features
 * Quick static analysis of iOS binaries
+* Checks for various iOS binary security features (encryption, PIE, Stack Canaries, ARC)
+* Detection of weak cryptographic methods (MD5, SHA1)
 * Identification of commonly misused and insecure functions
-* Detection of weak cryptographic methods
-* Checks for various iOS binary security features
 
 ## 📋 Requirements
 
