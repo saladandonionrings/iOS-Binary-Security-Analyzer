@@ -32,7 +32,9 @@ scp check-binary.sh root@ip:/var/root
 ./check-binary.sh <binary>
 ```
 
-### 📸 Screenshot
-![image](https://github.com/saladandonionrings/iOS-Binary-Security-Analyzer/assets/61053314/1f2ec322-c0da-4326-9f18-c1ad7585f6e7)
+### 📸 Screenshots
+![image](https://github.com/saladandonionrings/iOS-Binary-Security-Analyzer/assets/61053314/17cb1aeb-a646-4249-9d0b-236f7f0a9b94)
+![image](https://github.com/saladandonionrings/iOS-Binary-Security-Analyzer/assets/61053314/b3e8dcf3-4445-48b8-b3fd-017e7af23886)
+
 
 
