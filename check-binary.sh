@@ -37,16 +37,32 @@ binary=$1
 echo "[+] iOS Binary Security Analyzer"
 echo "*N/F = Not Found"
 echo ""
+echo "------------------------------------------"
+echo "------------- GOOD PRACTICES -------------"
+echo "------------------------------------------"
+echo ""
+# Check if the binary is encrypted
+crypt_info=$(otool -arch all -Vl "$binary" | grep -A5 LC_ENCRYPT | grep -w cryptid)
+if [[ $crypt_info = *"1"* ]]; then
+    echo "[+] Binary is encrypted :"
+else
+    echo "[-] Binary is not encrypted."
+fi
+echo $crypt_info
+echo ""
 
-# Perform the checks
 check_feature "PIE (Position Idependant Executable)" "otool -hv $binary | grep PIE"
 check_feature "Stack Canaries" "otool -I -v $binary | grep stack_chk"
 check_feature "ARC (Automatic Reference Counting)" "otool -I -v $binary | grep _objc_"
-check_feature "Encrypted Binary (cryptid 1)" "otool -arch all -Vl $binary | grep -A5 LC_ENCRYPT"
-check_feature "Weak Cryptography (MD5)" "otool -I -v $binary | grep -w '_CC_MD5'" 
+
+echo "-----------------------------------------"
+echo "------------- BAD PRACTICES -------------"
+echo "-----------------------------------------"
+echo ""
+
+check_feature "Weak Cryptography (MD5)" "otool -I -v $binary | grep -w '_CC_MD5'"
 check_feature "Weak Cryptography (SHA1)" "otool -I -v $binary | grep -w '_CC_SHA1'"
 
-# The previous checks
 functions=("_random" "_srand" "_rand" "_gets" "_memcpy" "_strncpy" "_strlen" "_vsnprintf" "_sscanf" "_strtok" "_alloca" "_sprintf" "_printf" "_vsprintf" "_malloc")
 echo "[*] Unsafe and insecure functions"
 printf "%-15s | %s\n" "Function" "Value"
