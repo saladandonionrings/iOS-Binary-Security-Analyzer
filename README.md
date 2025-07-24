@@ -1,6 +1,7 @@
 # 🕵️‍♂️ iOS Binary Security Analyzer
 
 This script inspects iOS application binaries to uncover usage of **insecure functions**, **implementation of weak cryptography**, **encryption status**, and the presence of **security features** like *Position Independent Executable* (PIE), *Stack Canaries*, and *Automatic Reference Counting* (ARC). 
+[8kSec Battlegrounds](https://8ksec.io/battle/) - Try free, hands-on mobile security CTF platform focused on iOS challenges.
 
 ## 🌟 Features
 * Quick static analysis of iOS binaries
